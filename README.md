@@ -2,9 +2,9 @@
 
 The project was written in `Python 2.7`
 
-`UnitHiearchy.py` contains code for the application
+`UserHiearchy.py` contains code for the application
 
-`UnitHiearchyTest.py` contains unit tests for the application
+`UserHiearchyTest.py` contains unit tests for the application
 
 `roles.json` contains a json that holds values for the roles
 
@@ -14,4 +14,4 @@ The project was written in `Python 2.7`
 `python UserHiearchy.py <User ID>`
 
 ## To execute unit tests
-`python UnitHiearchyTest.py`
+`python UserHiearchyTest.py`
