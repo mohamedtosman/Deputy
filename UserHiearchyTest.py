@@ -14,23 +14,22 @@ userHiearchy.setRoles(roles)
 
 @author Mohamed Osman
 """
-class TestUserHiearchy(unittest.TestCase):
+class UserHiearchyTest(unittest.TestCase):
 
 	def setUp(self):
 		print(self.id())
 
-	"""Test setting users correctly without any errors
-	"""
-	def testSetUsersCorrectly(self):
-		userHiearchy.setUsers(users)
+	# """Test setting users correctly without any errors
+	# """
+	# def testSetUsersCorrectly(self):
+	# 	userHiearchy.setUsers(users)
 
 	"""Test setting users with an empty list of users
 	"""
 	def testSetUsersWithEmptyUsersList(self):
 		with self.assertRaises(Exception) as context:
 			userHiearchy.setUsers([])
-
-		self.assertTrue("No users to be added." in context.exception)
+		self.assertTrue("No users to be added!" in context.exception)
 
 	"""Test setting users with users of type dictionary NOT list
 	"""
@@ -38,7 +37,7 @@ class TestUserHiearchy(unittest.TestCase):
 		with self.assertRaises(Exception) as context:
 			userHiearchy.setUsers(dict)
 
-		self.assertTrue("No users to be added." in context.exception)
+		self.assertTrue("No users to be added!" in context.exception)
 
 	"""Test setting roles correctly without any errors
 	"""
@@ -51,7 +50,7 @@ class TestUserHiearchy(unittest.TestCase):
 		with self.assertRaises(Exception) as context:
 			userHiearchy.setRoles([])
 
-		self.assertTrue("No roles to be added." in context.exception)
+		self.assertTrue("No roles to be added!" in context.exception)
 
 	"""Test setting users with users of type dictionary NOT list
 	"""
@@ -59,7 +58,7 @@ class TestUserHiearchy(unittest.TestCase):
 		with self.assertRaises(Exception) as context:
 			userHiearchy.setUsers(dict)
 
-		self.assertTrue("No users to be added." in context.exception)
+		self.assertTrue("No users to be added!" in context.exception)
 
 	"""Test getting subordinates with correct id value
 	"""
@@ -76,7 +75,7 @@ class TestUserHiearchy(unittest.TestCase):
 	def testGettingEmptySubordinates(self):
 		subordinates = userHiearchy.getSubordinates(2)
 
-		self.assertEqual(len(subordinates), 0)
+		self.assertEqual(subordinates, "Emily Employee does not have any subordinates.")
 
 
 	"""Test getting subordinates with an id value that does not exist
@@ -85,7 +84,15 @@ class TestUserHiearchy(unittest.TestCase):
 		with self.assertRaises(Exception) as context:
 			userHiearchy.getSubordinates(10)
 
-		self.assertTrue("User does not exist." in context.exception)
+		self.assertTrue("User does not exist!" in context.exception)
+
+	"""Test getting subordinates by entering an id of type string
+	"""
+	def testGetSubordinatesWithStringId(self):
+		with self.assertRaises(Exception) as context:
+			userHiearchy.getSubordinates("Not a number")
+
+		self.assertTrue("Entered id must be a number!" in context.exception)
 
 if __name__ == '__main__':
     unittest.main()

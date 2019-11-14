@@ -18,7 +18,7 @@ class UserHiearchy:
     def setUsers(self, users):
         # Raise an exception if passed in users are empty
         if not users or not isinstance(users, list):
-            raise Exception("No users to be added.")
+            raise Exception("No users to be added!")
         self.users = users
 
 
@@ -30,7 +30,7 @@ class UserHiearchy:
     def setRoles(self, roles):
         # Raise an exception if no passed in roles are empty
         if not roles or not isinstance(roles, list):
-            raise Exception("No roles to be added.")
+            raise Exception("No roles to be added!")
 
         # This dictionary will represent a dictionary where each key is the "Id" and
         # each value is a dictionary that holds the value for each role and also
@@ -61,11 +61,16 @@ class UserHiearchy:
     :id: id of the role we would like to get its subordinates
     """
     def getSubordinates(self, id):
+        try:
+            userId = int(id)
+        except ValueError:
+            raise Exception("Entered id must be a number!")
+
         # Iterate over users to find the user with the passed in id
-        wantedUser = next((user for user in self.users if user["Id"] == id), None)
+        wantedUser = next((user for user in self.users if user["Id"] == userId), None)
 
         # Raise exception if entered id does not map to a user in our list
-        if not wantedUser: raise Exception("User does not exist.")
+        if not wantedUser: raise Exception("User does not exist!")
 
         # Subordinates of wanted user
         subordinates = self.roles[wantedUser["Role"]]["subordinates"]
@@ -80,7 +85,7 @@ class UserHiearchy:
             if user["Role"] in subordinates:
                 subordinatesList.append(user)
 
-        return subordinatesList
+        return subordinatesList if subordinates else wantedUser["Name"] + " does not have any subordinates."
 
 if __name__ == "__main__":
     with io.open('users.json', encoding='utf-8') as users_file, io.open('roles.json', encoding='utf-8') as roles_file:
@@ -90,5 +95,5 @@ if __name__ == "__main__":
     UserHiearchy = UserHiearchy()
     UserHiearchy.setUsers(users)
     UserHiearchy.setRoles(roles)
-    userId = int(sys.argv[1])
+    userId = sys.argv[1]
     print(UserHiearchy.getSubordinates(userId))
